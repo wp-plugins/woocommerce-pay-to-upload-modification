@@ -36,7 +36,7 @@ Once files are uploaded you can view them from the admin view of the order. A me
 
 == Changelog ==
 
-=1.1.2=
+= 1.1.2 =
  * Fixed the uploader issues which was not working in the newer wordpress versions. Fixed by Ashok G
 
 
