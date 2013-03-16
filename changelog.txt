@@ -1,0 +1,15 @@
+*** WC Pay to Upload Changelog ***
+2013.03.14 - Version 1.1.2
+ * Fixed the uploader issues which was not working in the newer wordpress versions.
+
+2012.06.07 - version 1.1.1
+ * BUG: uploader() did not verify that the passable statuses were an array, ie one or no statuses available.
+ 
+2012.06.07 - version 1.1.0
+ * Added multiselect option for selecting statuses that allow for uploads to take place, previously was only if it was *NOT* on-hold or pending.
+ 
+2012.06.05 - version 1.0.1
+ * Fixed minor bugs and notices
+ 
+2012.06.02 - version 1.0.0
+ * First Release
