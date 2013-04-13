@@ -3,7 +3,7 @@
 Plugin Name: WooCommerce Pay to Upload
 Plugin URI: http://www.patrickgarman.com/wordpress-plugins/woocommerce/woocommerce-pay-to-upload/
 Description: Allow customers to pay to upload a file. Developed on the Airy plugin framework
-Version: 1.1.1
+Version: 1.1.3
 Author: Patrick Garman
 Author URI: http://www.patrickgarman.com/
 
