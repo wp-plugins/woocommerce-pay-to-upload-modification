@@ -4,7 +4,7 @@ Donate link: http://www.patrickgarman.com/donate/
 Tags: woocommerce, file upload
 Requires at least: 3.3.1
 Tested up to: 3.5.1
-Stable tag: 1.1.2
+Stable tag: 1.1.3
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -13,7 +13,8 @@ Allow customers to pay to upload a file.
 
 == Description ==
 
-Allow customers to pay to upload a file. Once a WooCommerce order has been marked as processed, a file upload screen will appear on the order details page.
+ * Allow customers to upload a file, Once a WooCommerce order has been successfully made by the buyer / customer, a file upload screen will appear on the order details page.
+ * Admin can control the number of uploads per product.
 
 == Installation ==
 	
@@ -35,6 +36,8 @@ Uploaded files are stored in your wp-content/uploads folder, a new folder named 
 Once files are uploaded you can view them from the admin view of the order. A meta box is added to the side with links to the files.
 
 == Changelog ==
+= 1.1.3 =
+ * Added Admin email notification when the user uploads the file.
 
 = 1.1.2 =
  * Fixed the uploader issues which was not working in the newer wordpress versions. Fixed by Ashok G

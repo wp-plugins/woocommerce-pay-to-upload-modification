@@ -192,10 +192,16 @@ $limits = 0;
 	 * @return void
 	 */
 	function uploader( $order_id ) {
+		if(!defined("PHP_EOL")){define("PHP_EOL", strtoupper(substr(PHP_OS,0,3) == "WIN") ? "\r\n" : "\n");}
 		$order = new WC_Order( $order_id );
 		$limits = $this->check_for_uploadables( $order_id );
 		if( $limits < 1 || ( ( is_array( $this->wc_ptu_order_statuses ) && !in_array( $order->status, $this->wc_ptu_order_statuses ) ) ) || $order->status == $this->wc_ptu_order_statuses ) return;
+ 	 	$admin_email = get_settings('admin_email'); 
 		echo '<h2>' . __( 'Upload Files', 'wc_pay_to_upload' ) . '</h2>';
+		global $current_user;
+     	 get_currentuserinfo();
+		 $from =  $current_user->user_email;
+		 $to = $admin_email;
 		if( isset( $_FILES ) ) {
 			$path = trailingslashit( trailingslashit( $this->wc_ptu_uploads_path ) . $order_id );
 			foreach( $_FILES as $key => $file ) {
@@ -221,6 +227,19 @@ $limits = 0;
 				if( $allow == true ) {
 					if( copy( $file['tmp_name'], $filepath ) ) {
 						echo '<p class="success">' . __( 'Your file(s) were uploaded successfully.', 'wc_pay_to_upload') . '</p>';
+						$subject = 'File Upload Notification OrderId - '.$order_id;
+						$message = "Dear Admin, <br><br>User Has uploaded files for order - ".$order_id."<br><br> Please logon to your Admin Panel to download the files.";
+						$headers .= 'From:'. $from.PHP_EOL;
+						$headers .= 'Content-type: text/html; charset=iso-8859-1'.PHP_EOL;
+						if (wp_mail( $to, $subject, $message, $headers ))
+						{
+							//echo 'Mail Success';
+						}
+						else
+						{
+							//echo 'Mail Error';
+						}
+						
 						update_post_meta( $order_id, '_wc_uploaded_file_name_' . $key, $file['name'] );
 						update_post_meta( $order_id, '_wc_uploaded_file_path_' . $key, $filepath );
 					} else {
