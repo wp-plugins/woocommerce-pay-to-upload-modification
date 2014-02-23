@@ -3,7 +3,7 @@
 Plugin Name: WooCommerce Pay to Upload
 Plugin URI:  http://ashokg.in/woocommerce-pay-to-upload 
 Description: Allow customers to upload a file after the payment made. Developed on the Airy plugin framework
-Version: 1.2
+Version: 2.0
 Author: Ashok G
 Author URI: http://ashokg.in
 
