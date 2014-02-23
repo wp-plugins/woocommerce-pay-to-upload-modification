@@ -79,7 +79,8 @@ class WC_Pay_To_Upload extends Airy_Framework {
 	 * @return void
 	 */
 	function woocommerce_init() {
-		$statuses = get_terms( 'shop_order_status', array( 'hide_empty' => false ) );
+		global $wpdb;
+		$statuses = $wpdb->get_results( "SELECT b.name, b.term_id, a.taxonomy, b.slug FROM $wpdb->term_taxonomy a, $wpdb->terms b WHERE a.taxonomy = 'shop_order_status' AND a.term_id = b.term_id");
 		$values = array();
 		foreach( $statuses as $status ) {
 			$values[ $status->slug ] = $status->name;
@@ -88,7 +89,7 @@ class WC_Pay_To_Upload extends Airy_Framework {
 			'name'		=> 'wc_ptu_order_statuses',
 			'title'		=> __('Required Status(es)', 'wc_pay_to_upload' ),
 			'type'		=> 'multiselect',
-			'desc'		=> __('The required order statuses to allow customers to upload files, hold Control or Command to select multiple options.', 'wc_pay_to_upload' ),
+			'desc'		=> __('The required order status to not allow customers to upload files, hold Control or Command to select multiple options.', 'wc_pay_to_upload' ),
 			'values'	=> $values,
 			'default'	=> array( 'completed', 'processing' ),
 		);
