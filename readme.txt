@@ -12,9 +12,17 @@ License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Allow customers to pay to upload a file.
 
 == Description ==
+Hello Friends,<br>
+This is a wordpress woocommerce support plugin which will enable the customers to upload files after purchase.<br>
 
- * Allow customers to upload a file, Once a WooCommerce order has been successfully made by the buyer / customer, a file upload screen will appear on the order details page.
- * Admin can control the number of uploads per product.
+Features:<br>
+
+    Admin can centrally control the number of uploads per product.<br>
+    Admin can control the the number of uploads per product on a particular product.</br>
+    Admin can enable / disable the file upload for a particular product.<br>
+    Admin can set the respective file types to be uploaded.<br>
+    This plugin would be in continuous revision and support.<br>
+
 
 == Installation ==
 	
