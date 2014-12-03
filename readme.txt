@@ -3,7 +3,7 @@ Contributors: wpashokg, patrickgarman
 Donate link: http://www.ashokg.in/
 Tags: woocommerce, file upload
 Requires at least: 3.3.1
-Tested up to: 3.8.1
+Tested up to: 4.0 
 Stable tag: 2.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
