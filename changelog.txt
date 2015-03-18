@@ -1,9 +1,9 @@
 *** WC Pay to Upload Changelog ***
-2014.02.23 - Version 2.0
+2014.02.23 - Version  2.0
  * Modifications done to work with latest woocommerce plugin.
 2014.02.23 - Version 1.2
  * Modifications done to work with latest woocommerce plugin.
-2013.04.13 - Version 1.1.3
+ 2013.04.13 - Version 1.1.3
  * Added Admin email notification when the user uploads the file.
  
 2013.03.14 - Version 1.1.2
