@@ -44,6 +44,10 @@ Uploaded files are stored in your wp-content/uploads folder, a new folder named 
 Once files are uploaded you can view them from the admin view of the order. A meta box is added to the side with links to the files.
 
 == Changelog ==
+= 2.0.1 =
+ * Made Some technical changes to make the plugin work with latest woocommerce
+ * verrsion.
+
 = 1.2 =
  * Modified to support the latest version of woocommerce.
 
