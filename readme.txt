@@ -1,10 +1,10 @@
 === WooCommerce Pay to Upload ===
 Contributors: wpashokg, patrickgarman 
-Donate link: http://www.ashokg.in/
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=RTAAFGGL53DMG
 Tags: woocommerce, file upload
 Requires at least: 3.3.1
-Tested up to: 4.0 
-Stable tag: 2.0
+Tested up to: 4.1.1 
+Stable tag: 2.0.1
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -44,6 +44,10 @@ Uploaded files are stored in your wp-content/uploads folder, a new folder named 
 Once files are uploaded you can view them from the admin view of the order. A meta box is added to the side with links to the files.
 
 == Changelog ==
+= 2.0.1 =
+ * Made Some technical changes to make the plugin work with latest woocommerce
+ * verrsion.
+
 = 1.2 =
  * Modified to support the latest version of woocommerce.
 
