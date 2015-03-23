@@ -79,12 +79,21 @@ class WC_Pay_To_Upload extends Airy_Framework {
 	 * @return void
 	 */
 	function woocommerce_init() {
-		global $wpdb;
-		$statuses = $wpdb->get_results( "SELECT b.name, b.term_id, a.taxonomy, b.slug FROM $wpdb->term_taxonomy a, $wpdb->terms b WHERE a.taxonomy = 'shop_order_status' AND a.term_id = b.term_id");
+			
+		$order_status = wc_get_order_statuses();
+
+		$statuses = $order_status;
+
 		$values = array();
-		foreach( $statuses as $status ) {
-			$values[ $status->slug ] = $status->name;
+
+		foreach( $statuses as $status => $key ) {
+
+			$values[ $status ] = $key;
+
 		}
+
+
+
 		$this->fields[] = array(
 			'name'		=> 'wc_ptu_order_statuses',
 			'title'		=> __('Required Status(es)', 'wc_pay_to_upload' ),
@@ -104,17 +113,31 @@ class WC_Pay_To_Upload extends Airy_Framework {
 	 * @return void
 	 */
 	function order_uploaded_files( $post ) {
+		$order = new WC_Order( $post->ID );
+		$items = $order->get_items();
 		$limit = $this->check_for_uploadables( $post->ID );
+		echo '<table style="border-collapse:collapse;" border="1" cellpadding="5" cellspacing="0">';
+		foreach( $items as $item ) {
+						echo '<tr><th colspan="2">Uploaded Files for '.$item['name'].'</th></tr>';
+								echo '<tr><th>S.No.</th><th>File Name</th></tr>';
+
+				$limit = (int) get_post_meta( $item['product_id'], '_wc_ptu_limit', true ); //Changed $item['item_id'] to $item['product_id'] for wordpress version 3.5.1 Ashok G
+				if( get_post_meta( $item['product_id'], '_wc_ptu_enable', true ) == 1 && $limit > 0 ) {
+					$limits = $limit;
+				}
 		for ($i = 1; $i <= $limit; $i++) {
-			$url = home_url( str_replace( ABSPATH, '', get_post_meta( $post->ID, '_wc_uploaded_file_path_' . $i, true ) ) );
-			$name = get_post_meta( $post->ID, '_wc_uploaded_file_name_' . $i, true );
+			$item_id = $item['product_id'].$i;
+			$url = home_url( str_replace( ABSPATH, '', get_post_meta( $post->ID, '_wc_uploaded_file_path_' . $item_id, true ) ) );
+			$name = get_post_meta( $post->ID, '_wc_uploaded_file_name_' . $item_id, true );
 			if( !empty( $url ) && !empty( $name ) ) {
-				printf( __('File #%s: <a href="%s" target="_blank">%s</a>', 'wc_pay_to_upload'), $i, $url, $name );
+				printf( __('<tr><td>%s</td><td> <a href="%s" target="_blank">%s</a></td></tr>', 'wc_pay_to_upload'),$i,  $url, $name);
 			} else {
-				printf( __('File #%s has not been uploaded.', 'wc_pay_to_upload'), $i );
+				printf( __('<tr><td> %s</td><td> has not been uploaded.</td></tr>', 'wc_pay_to_upload'), $i );
 			}
-			echo '<br/>';
+			
 		}
+	}
+	echo '</table>';
 	}
 	
 	/**
@@ -195,6 +218,7 @@ $limits = 0;
 	function uploader( $order_id ) {
 		if(!defined("PHP_EOL")){define("PHP_EOL", strtoupper(substr(PHP_OS,0,3) == "WIN") ? "\r\n" : "\n");}
 		$order = new WC_Order( $order_id );
+		 $items = $order->get_items();
 		$limits = $this->check_for_uploadables( $order_id );
 		if( $limits < 1 || ( ( is_array( $this->wc_ptu_order_statuses ) && !in_array( $order->status, $this->wc_ptu_order_statuses ) ) ) || $order->status == $this->wc_ptu_order_statuses ) return;
  	 	$admin_email = get_settings('admin_email'); 
@@ -256,20 +280,30 @@ $limits = 0;
 		$max_post = (int)(ini_get('post_max_size'));
 		$memory_limit = (int)(ini_get('memory_limit'));
 		$upload_mb = min($max_upload, $max_post, $memory_limit);
-		
 		echo '<form enctype="multipart/form-data" action="" method="POST">';
 			$upload = false;
+			if( is_array( $items ) ) {
+			foreach( $items as $item ) {
+				echo '<h3> Upload Files for '.$item['name'].'</h3>';
+				$limit = (int) get_post_meta( $item['product_id'], '_wc_ptu_limit', true ); //Changed $item['item_id'] to $item['product_id'] for wordpress version 3.5.1 Ashok G
+				if( get_post_meta( $item['product_id'], '_wc_ptu_enable', true ) == 1 && $limit > 0 ) {
+					$limits = $limit;
+				}
 			for ($i = 1; $i <= $limits; $i++) {
 				echo '<label for="' . $i . '">File ' . $i . ': </label>';
-				$name = get_post_meta( $order_id, '_wc_uploaded_file_name_' . $i, true );
+				$file_name_append = $item['product_id'].$i;
+				$name = get_post_meta( $order_id, '_wc_uploaded_file_name_' . $file_name_append, true );
 				if( empty( $name ) ) {
-					echo '<input type="file" name="' . $i . '" />';
+					echo '<input type="file" name="' . $file_name_append . '" />';
 					$upload = true;
 				} else {
 					echo $name;
 				}
 				echo '<br/>';
 			}
+			}
+		}
+			
 			if( $upload ) {
 				echo '<input type="submit" class="button" value="' . __( 'Upload', 'wc_pay_to_upload' ) . '" /><br/>';
 				echo '<p>' . sprintf( __( 'Max upload size: %s', 'wc_pay_to_upload' ), $upload_mb ) . 'MB</p>';
